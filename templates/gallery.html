@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>漫画相册</title>
+<style>
+body{margin:0;background:#121212;color:#eee;font-family:system-ui,-apple-system,sans-serif;padding:8px}
+#container{column-count:2;column-gap:8px}
+@media(min-width:768px){#container{column-count:4}}
+.item{break-inside:avoid;margin-bottom:8px;background:#252525;border-radius:8px;overflow:hidden;position:relative}
+.item img{width:100%;display:block;height:auto;cursor:zoom-in}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:999;flex-direction:column;justify-content:center;align-items:center}
+.modal img{max-width:100%;max-height:85vh;object-fit:contain}
+.toolbar{margin-top:15px;display:flex;gap:20px;background:rgba(255,255,255,.1);padding:10px 20px;border-radius:30px;backdrop-filter:blur(5px)}
+.btn{color:#fff;text-decoration:none;cursor:pointer;font-size:14px;border:none;background:0 0}
+#toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#333;padding:8px 16px;border-radius:20px;opacity:0;transition:opacity .3s;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="container">
+    {% for img in images %}
+    <div class="item"><img src="/thumb/{{img}}" data-full="/uploads/{{img}}" loading="lazy" onclick="openModal(this)"></div>
+    {% endfor %}
+</div>
+<div id="modal" class="modal" onclick="closeModal(event)">
+    <img id="bigImg">
+    <div class="toolbar" onclick="event.stopPropagation()">
+        <a id="dlBtn" href="#" download class="btn">下载</a>
+        <button class="btn" onclick="copyLink()">分享</button>
+        <button class="btn" onclick="closeModalDirect()">关闭</button>
+    </div>
+</div>
+<div id="toast">已复制链接</div>
+<script>
+const m=document.getElementById('modal'),b=document.getElementById('bigImg'),d=document.getElementById('dlBtn'),t=document.getElementById('toast');
+let cur='';
+function openModal(e){cur=e.dataset.full;b.src=cur;d.href=cur;m.style.display='flex';document.body.style.overflow='hidden'}
+function closeModalDirect(){m.style.display='none';document.body.style.overflow='auto'}
+function closeModal(e){if(e.target===m)closeModalDirect()}
+function copyLink(){navigator.clipboard.writeText(window.location.origin+cur).then(()=>{t.style.opacity=1;setTimeout(()=>t.style.opacity=0,2000)})}
+</script>
+</body>
+</html>
