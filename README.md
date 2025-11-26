@@ -1,4 +1,4 @@
-# MangaPhotos: 基于 Alist + Rclone + Flask 的云端相册系统
+# MangaGallery: 基于 Alist + Rclone + Flask 的云端相册系统
 
 这是一个轻量级、前后端分离的相册解决方案。它利用 Alist 挂载网盘作为无限存储后端，通过 Rclone 将其挂载到本地，最后由 Python Flask 提供极速的 Web 访问体验。
 
