@@ -24,4 +24,4 @@
 ├── local_cache/        # 缩略图缓存 (自动生成)
 └── storage/            # Rclone 挂载点
 ```
-详细教程：[构建无限容量的云端漫画相册]([https://](https://qunq.de/feed/16))
+详细教程:  [构建无限容量的云端漫画相册](https://qunq.de/feed/16)
